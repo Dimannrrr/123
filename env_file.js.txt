@@ -1,0 +1,28 @@
+function importAllStudent(){
+  const optionalArguments = {
+    teacherId : 'me',
+    courseStates : 'ACTIVE'
+  };
+
+  const response = Classroom.Courses.list(optionalArguments);
+  //console.log(response)
+  const courses = response.courses
+  for(let i = 0; i < courses.length; i++){
+    let courseName = courses[i].name
+    let courseId = courses[i].id;
+    console.log('Class Name: '+courseName, 'Class ID: '+courseId)
+  }
+}
+
+function namesAndEmails(courseId){
+  var studentNames = [];
+  var studentEmails = [];
+  var together = [studentNames, studentEmails]
+  var response = Classroom.Courses.Students.list(courseId)
+  var students = response.students
+  for(var i=0; i < students.length; i++){
+    studentNames.push(students[i].profile.name.fullName)
+    studentEmails.push(students[i].profile.emailAddress)
+  }
+  return together;
+}
